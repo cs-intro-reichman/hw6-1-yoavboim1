@@ -5,12 +5,12 @@ public class Runigram {
 
 	public static void main(String[] args) {
 
-		Color[][] tinyImage = read("tinypic.ppm");
-		print(tinyImage);
+		Color[][] tinyPic = read("tinypic.ppm");
+		print(tinyPic);
 
 		Color[][] image;
 
-		image = flippedHorizontally(tinyImage);
+		image = flippedHorizontally(tinyPic);
 		System.out.println();
 		print(image);
 	}
@@ -147,9 +147,9 @@ public class Runigram {
 			StdDraw.pause(500);
 		}
 	}
-
+	
 	public static void setCanvas(Color[][] image) {
-		StdDraw.setTitle("Runigram 2023");
+		StdDraw.setTitle("Runigram 2025");
 		int height = image.length;
 		int width = image[0].length;
 		StdDraw.setCanvasSize(width, height);
