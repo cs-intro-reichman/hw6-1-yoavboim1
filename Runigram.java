@@ -116,9 +116,9 @@ public class Runigram {
 	}
 
 	public static Color blend(Color first, Color second, double alpha) {
-		int red = (int) (alpha * first.getRed() + (1 + alpha) * second.getRed());
-		int green = (int) (alpha * first.getGreen() + (1 + alpha) * second.getGreen());
-		int blue = (int) (alpha * first.getBlue() + (1 + alpha) * second.getBlue());
+		int red = (int) (alpha * first.getRed() + (1 - alpha) * second.getRed());
+		int green = (int) (alpha * first.getGreen() + (1 - alpha) * second.getGreen());
+		int blue = (int) (alpha * first.getBlue() + (1 - alpha) * second.getBlue());
 		return new Color(red, green, blue);
 	}
 
@@ -144,14 +144,14 @@ public class Runigram {
 			double alpha = (double) (steps - step) / steps;
 			Color[][] frame = blend(source, target, alpha);
 			display(frame);
-			StdDraw.pause(500 * 5);
+			StdDraw.pause(500);
 		}
 	}
 
 	public static void setCanvas(Color[][] image) {
 		StdDraw.setTitle("Runigram 2023");
 		int height = image.length;
-		int width = image.length;
+		int width = image[0].length;
 		StdDraw.setCanvasSize(width, height);
 		StdDraw.setXscale(0, width);
 		StdDraw.setYscale(0, height);
@@ -172,6 +172,6 @@ public class Runigram {
 				StdDraw.filledSquare(col + 0.5, height - row - 0.5, 0.5);
 			}
 		}
-		StdDraw.showw();
+		StdDraw.show();
 	}
 }
