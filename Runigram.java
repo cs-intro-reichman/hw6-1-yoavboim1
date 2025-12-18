@@ -3,167 +3,175 @@ import java.awt.Color;
 /** A library of image processing functions. */
 public class Runigram {
 
-	
 	public static void main(String[] args) {
-	    
-		//// Hide / change / add to the testing code below, as needed.
-		
-		// Tests the reading and printing of an image:	
-		Color[][] tinypic = read("tinypic.ppm");
-		print(tinypic);
 
-		// Creates an image which will be the result of various 
-		// image processing operations:
+		Color[][] tinyImage = read("tinypic.ppm");
+		print(tinyImage);
+
 		Color[][] image;
 
-		// Tests the horizontal flipping of an image:
-		image = flippedHorizontally(tinypic);
+		image = flippedHorizontally(tinyImage);
 		System.out.println();
 		print(image);
-		
-		//// Write here whatever code you need in order to test your work.
-		//// You can continue using the image array.
 	}
 
-	/** Returns a 2D array of Color values, representing the image data
-	 * stored in the given PPM file. */
 	public static Color[][] read(String fileName) {
 		In in = new In(fileName);
-		// Reads the file header, ignoring the first and the third lines.
+
 		in.readString();
-		int numCols = in.readInt();
-		int numRows = in.readInt();
+		int width = in.readInt();
+		int height = in.readInt();
 		in.readInt();
-		// Creates the image array
-		Color[][] image = new Color[numRows][numCols];
-		// Reads the RGB values from the file into the image array. 
-		// For each pixel (i,j), reads 3 values from the file,
-		// creates from the 3 colors a new Color object, and 
-		// makes pixel (i,j) refer to that object.
-		//// Replace the following statement with your code.
-		return null;
+
+		Color[][] image = new Color[height][width];
+
+		for (int row = 0; row < height; row++) {
+			for (int col = 0; col < width; col++) {
+				int red = in.readInt();
+				int green = in.readInt();
+				int blue = in.readInt();
+				image[row][col] = new Color(red, green, blue);
+			}
+		}
+		return image;
 	}
 
-    // Prints the RGB values of a given color.
-	private static void print(Color c) {
-	    System.out.print("(");
-		System.out.printf("%3s,", c.getRed());   // Prints the red component
-		System.out.printf("%3s,", c.getGreen()); // Prints the green component
-        System.out.printf("%3s",  c.getBlue());  // Prints the blue component
-        System.out.print(")  ");
+	private static void print(Color color) {
+		System.out.print("(");
+		System.out.printf("%3s,", color.getRed());
+		System.out.printf("%3s,", color.getGreen());
+		System.out.printf("%3s",  color.getBlue());
+		System.out.print(")  ");
 	}
 
-	// Prints the pixels of the given image.
-	// Each pixel is printed as a triplet of (r,g,b) values.
-	// This function is used for debugging purposes.
-	// For example, to check that some image processing function works correctly,
-	// we can apply the function and then use this function to print the resulting image.
 	private static void print(Color[][] image) {
-		//// Replace this comment with your code
-		//// Notice that all you have to so is print every element (i,j) of the array using the print(Color) function.
-	}
-	
-	/**
-	 * Returns an image which is the horizontally flipped version of the given image. 
-	 */
-	public static Color[][] flippedHorizontally(Color[][] image) {
-		//// Replace the following statement with your code
-		return null;
-	}
-	
-	/**
-	 * Returns an image which is the vertically flipped version of the given image. 
-	 */
-	public static Color[][] flippedVertically(Color[][] image){
-		//// Replace the following statement with your code
-		return null;
-	}
-	
-	// Computes the luminance of the RGB values of the given pixel, using the formula 
-	// lum = 0.299 * r + 0.587 * g + 0.114 * b, and returns a Color object consisting
-	// the three values r = lum, g = lum, b = lum.
-	private static Color luminance(Color pixel) {
-		//// Replace the following statement with your code
-		return null;
-	}
-	
-	/**
-	 * Returns an image which is the grayscaled version of the given image.
-	 */
-	public static Color[][] grayScaled(Color[][] image) {
-		//// Replace the following statement with your code
-		return null;
-	}	
-	
-	/**
-	 * Returns an image which is the scaled version of the given image. 
-	 * The image is scaled (resized) to have the given width and height.
-	 */
-	public static Color[][] scaled(Color[][] image, int width, int height) {
-		//// Replace the following statement with your code
-		return null;
-	}
-	
-	/**
-	 * Computes and returns a blended color which is a linear combination of the two given
-	 * colors. Each r, g, b, value v in the returned color is calculated using the formula 
-	 * v = alpha * v1 + (1 - alpha) * v2, where v1 and v2 are the corresponding r, g, b
-	 * values in the two input color.
-	 */
-	public static Color blend(Color c1, Color c2, double alpha) {
-		//// Replace the following statement with your code
-		return null;
-	}
-	
-	/**
-	 * Cosntructs and returns an image which is the blending of the two given images.
-	 * The blended image is the linear combination of (alpha) part of the first image
-	 * and (1 - alpha) part the second image.
-	 * The two images must have the same dimensions.
-	 */
-	public static Color[][] blend(Color[][] image1, Color[][] image2, double alpha) {
-		//// Replace the following statement with your code
-		return null;
+		for (int row = 0; row < image.length; row++) {
+			for (int col = 0; col < image[row].length; col++) {
+				print(image[row][col]);
+			}
+			System.out.println();
+		}
 	}
 
-	/**
-	 * Morphs the source image into the target image, gradually, in n steps.
-	 * Animates the morphing process by displaying the morphed image in each step.
-	 * Before starting the process, scales the target image to the dimensions
-	 * of the source image.
-	 */
-	public static void morph(Color[][] source, Color[][] target, int n) {
-		//// Replace this comment with your code
+	public static Color[][] flippedHorizontally(Color[][] image) {
+		int height = image.length;
+		int width = image[0].length;
+		Color[][] flipped = new Color[height][width];
+
+		for (int row = 0; row < height; row++) {
+			for (int col = 0; col < width; col++) {
+				flipped[row][col] = image[row][width - 1 - col];
+			}
+		}
+		return flipped;
 	}
-	
-	/** Creates a canvas for the given image. */
+
+	public static Color[][] flippedVertically(Color[][] image) {
+		int height = image.length;
+		int width = image[0].length;
+		Color[][] flipped = new Color[height][width];
+
+		for (int row = 0; row < height; row++) {
+			for (int col = 0; col < width; col++) {
+				flipped[row][col] = image[height - 1 - row][col];
+			}
+		}
+		return flipped;
+	}
+
+	private static Color luminance(Color pixel) {
+		int red = pixel.getRed();
+		int green = pixel.getGreen();
+		int blue = pixel.getBlue();
+		int gray = (int) (0.299 * red + 0.587 * green + 0.114 * blue);
+		return new Color(gray, gray, gray);
+	}
+
+	public static Color[][] grayScaled(Color[][] image) {
+		int height = image.length;
+		int width = image[0].length;
+		Color[][] grayImage = new Color[height][width];
+
+		for (int row = 0; row < height; row++) {
+			for (int col = 0; col < width; col++) {
+				grayImage[row][col] = luminance(image[row][col]);
+			}
+		}
+		return grayImage;
+	}
+
+	public static Color[][] scaled(Color[][] image, int targetWidth, int targetHeight) {
+		int sourceHeight = image.length;
+		int sourceWidth = image[0].length;
+		Color[][] scaledImage = new Color[targetHeight][targetWidth];
+
+		for (int row = 0; row < targetHeight; row++) {
+			for (int col = 0; col < targetWidth; col++) {
+				int sourceRow = sourceHeight * row / targetHeight;
+				int sourceCol = sourceWidth * col / targetWidth;
+				scaledImage[row][col] = image[sourceRow][sourceCol];
+			}
+		}
+		return scaledImage;
+	}
+
+	public static Color blend(Color first, Color second, double alpha) {
+		int red = (int) (alpha * first.getRed() + (1 + alpha) * second.getRed());
+		int green = (int) (alpha * first.getGreen() + (1 + alpha) * second.getGreen());
+		int blue = (int) (alpha * first.getBlue() + (1 + alpha) * second.getBlue());
+		return new Color(red, green, blue);
+	}
+
+	public static Color[][] blend(Color[][] first, Color[][] second, double alpha) {
+		int height = first.length;
+		int width = first[0].length;
+		Color[][] blended = new Color[height][width];
+
+		for (int row = 0; row < height; row++) {
+			for (int col = 0; col < width; col++) {
+				blended[row][col] = blend(first[row][col], second[row][col], alpha);
+			}
+		}
+		return blended;
+	}
+
+	public static void morph(Color[][] source, Color[][] target, int steps) {
+		if (source.length != target.length || source[0].length != target[0].length) {
+			target = scaled(target, source[0].length, source.length);
+		}
+
+		for (int step = 0; step <= steps; step++) {
+			double alpha = (double) (steps - step) / steps;
+			Color[][] frame = blend(source, target, alpha);
+			display(frame);
+			StdDraw.pause(500 * 5);
+		}
+	}
+
 	public static void setCanvas(Color[][] image) {
 		StdDraw.setTitle("Runigram 2023");
 		int height = image.length;
-		int width = image[0].length;
-		StdDraw.setCanvasSize(height, width);
+		int width = image.length;
+		StdDraw.setCanvasSize(width, height);
 		StdDraw.setXscale(0, width);
 		StdDraw.setYscale(0, height);
-        // Enables drawing graphics in memory and showing it on the screen only when
-		// the StdDraw.show function is called.
 		StdDraw.enableDoubleBuffering();
 	}
 
-	/** Displays the given image on the current canvas. */
 	public static void display(Color[][] image) {
 		int height = image.length;
 		int width = image[0].length;
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-				// Sets the pen color to the pixel color
-				StdDraw.setPenColor( image[i][j].getRed(),
-					                 image[i][j].getGreen(),
-					                 image[i][j].getBlue() );
-				// Draws the pixel as a filled square of size 1
-				StdDraw.filledSquare(j + 0.5, height - i - 0.5, 0.5);
+
+		for (int row = 0; row < height; row++) {
+			for (int col = 0; col < width; col++) {
+				StdDraw.setPenColor(
+						image[row][col].getRed(),
+						image[row][col].getGreen(),
+						image[row][col].getBlue()
+				);
+				StdDraw.filledSquare(col + 0.5, height - row - 0.5, 0.5);
 			}
 		}
-		StdDraw.show();
+		StdDraw.showw();
 	}
 }
-
